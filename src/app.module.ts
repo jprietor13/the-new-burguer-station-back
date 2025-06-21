@@ -7,6 +7,10 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { BurgersModule } from './burgers/burgers.module';
 import { OrdersModule } from './orders/orders.module';
+import { ExtrasModule } from './extras/extras.module';
+import { SaucesModule } from './sauces/sauces.module';
+import { SidesModule } from './sides/sides.module';
+import { DrinksModule } from './drinks/drinks.module';
 
 @Module({
   imports: [
@@ -24,6 +28,10 @@ import { OrdersModule } from './orders/orders.module';
     UsersModule,
     BurgersModule,
     OrdersModule,
+    ExtrasModule,
+    SaucesModule,
+    SidesModule,
+    DrinksModule,
   ],
   controllers: [AppController],
   providers: [AppService],
