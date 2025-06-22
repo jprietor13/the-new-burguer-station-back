@@ -11,6 +11,12 @@ if (typeof globalThis.crypto === 'undefined') {
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  //TODO
+  app.enableCors({
+    origin: ['http://localhost:5173'],
+    credentials: true,
+  });
+
   const config = new DocumentBuilder()
     .setTitle('Burger Station API')
     .setDescription('Documentación de la API')
