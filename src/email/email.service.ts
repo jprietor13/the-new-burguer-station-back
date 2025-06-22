@@ -1,15 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import * as sgMail from '@sendgrid/mail';
 
 @Injectable()
 export class EmailService {
-  constructor() {
-    const apiKey = process.env.SENDGRID_API_KEY;
+  constructor(private readonly configService: ConfigService) {
+    const apiKey = this.configService.get<string>('SENDGRID_API_KEY');
     if (!apiKey) {
-      throw new Error('SENDGRID_API_KEY is not defined in .env');
+      throw new Error(
+        'SENDGRID_API_KEY is not defined in environment variables',
+      );
     }
     sgMail.setApiKey(apiKey);
-    console.log('API KEY:', process.env.SENDGRID_API_KEY);
   }
 
   async sendOrderConfirmation(to: string, orderData: any) {
@@ -25,9 +27,11 @@ export class EmailService {
       <p><strong>Total:</strong> $${totalPrice.toFixed(2)}</p>
     `;
 
-    const fromEmail = process.env.SENDGRID_FROM_EMAIL;
+    const fromEmail = this.configService.get<string>('SENDGRID_FROM_EMAIL');
     if (!fromEmail) {
-      throw new Error('SENDGRID_FROM_EMAIL is not defined in .env');
+      throw new Error(
+        'SENDGRID_FROM_EMAIL is not defined in environment variables',
+      );
     }
 
     const msg = {
