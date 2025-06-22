@@ -1,98 +1,200 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🍔 The New Burger Station API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+**The New Burger Station** es una API REST creada con **NestJS** que permite:
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- Registrar usuarios
+- Autenticarlos con JWT
+- Listar hamburguesas, extras, bebidas, acompañamientos y salsas
+- Crear órdenes personalizadas
+- Enviar confirmaciones por correo al cliente vía **SendGrid**
 
-## Description
+Esta API está totalmente documentada con **Swagger** y desplegada en **Railway** con base de datos **MySQL**.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## 🌐 Producción
 
-```bash
-$ npm install
+🔗 API desplegada:[**https://the-new-burguer-station-back-jp.up.railway.app/api**](https://the-new-burguer-station-back-jp.up.railway.app/api)
+
+📬 Emails enviados vía **SendGrid**✔️ JWT protegidos📘 Swagger activo🧹 Base de datos MySQL en Railway
+
+---
+
+## 🧠 Tecnologías utilizadas
+
+- [NestJS](https://nestjs.com/)
+- [TypeORM](https://typeorm.io/)
+- [MySQL](https://www.mysql.com/)
+- [Docker](https://www.docker.com/)
+- [SendGrid](https://sendgrid.com/)
+- [JWT](https://jwt.io/)
+- [Swagger](https://swagger.io/)
+- [Railway](https://railway.app/)
+
+---
+
+## 📁 Estructura del proyecto
+
+```
+src/
+│
+├── auth/          → Registro, login y estrategia JWT
+├── burgers/       → Módulo de hamburguesas
+├── orders/        → Módulo de órdenes
+├── extras/        → Extras disponibles
+├── drinks/        → Bebidas
+├── sides/         → Acompañamientos
+├── sauces/        → Salsas
+├── email/         → Servicio para envío de correos
+├── users/         → Gestión de usuarios
+├── app.module.ts  → Configuración global
+├── main.ts        → Punto de arranque y Swagger
 ```
 
-## Compile and run the project
+---
+
+## ⚙️ Configuración local
+
+### 1. Clonar el repositorio
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+git clone https://github.com/tu-usuario/the-new-burguer-station-back.git
+cd the-new-burguer-station-back
 ```
 
-## Run tests
+### 2. Instalar dependencias
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm install
 ```
 
-## Deployment
+### 3. Configurar base de datos local
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+- Crear una base de datos MySQL llamada `burger_station_db`, se puede crear manualmente con el instalador de mySql o usar Docker para crear un contenedor y montar la BD desde ahi.
+- Crear un archivo `.env` con:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+```env
+DB_HOST=localhost
+DB_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=root
+DB_NAME=burger_station_db
+
+SENDGRID_API_KEY=clave_sendgrid
+SENDGRID_FROM_EMAIL=correo_verificado_cuenta_sendgrid
+
+JWT_SECRET=clave_segura_para_jwt
+```
+
+### 4. Iniciar servidor
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run start:dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Swagger: [http://localhost:3000/api](http://localhost:3000/api)
 
-## Resources
+---
 
-Check out a few resources that may come in handy when working with NestJS:
+## 🧪 Probar en local con Swagger
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Para probar todos los endpoints desde:📘 `http://localhost:3000/api`
 
-## Support
+### Ejemplo para registrar:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+`POST /auth/register`
 
-## Stay in touch
+```json
+{
+  "email": "test@example.com",
+  "password": "123456"
+}
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Luego, realizar el login:
 
-## License
+`POST /auth/login`→ Con ese endpoint se obtiene el `access_token` para autenticar al usuario
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Para usar endpoints protegidos:
+
+Agregra este header en Swagger:
+
+```
+Authorization: Bearer ACCESS_TOKEN
+```
+
+---
+
+## ✉️ Crear una orden (protegido)
+
+`POST /orders`
+
+```json
+{
+  "burgerId": 1,
+  "extras": ["Tocineta", "Queso cheddar"],
+  "sauces": ["Mayonesa", "BBQ"],
+  "side": "Papas fritas",
+  "drink": "Cola",
+  "totalPrice": 18.75
+}
+```
+
+✅ Recibirá un correo de confirmación si el email del usuario es válido.
+
+---
+
+## 🚀 Despliegue en producción (Railway)
+
+1. Conectar el repositorio a Railway
+2. Agregar las variables en Settings > Variables:
+
+```env
+DB_HOST=mysql.railway.internal
+DB_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=clave_generada_railway
+DB_NAME=railway
+
+SENDGRID_API_KEY=clave_real
+SENDGRID_FROM_EMAIL=correo_verificado
+
+JWT_SECRET=clave_segura
+```
+
+3. Railway crea una base de datos MySQL automáticamente desde "New > MySQL"
+
+### Procfile
+
+En la raíz del proyecto:
+
+```
+start: npm run start:prod
+```
+
+Y en `package.json`:
+
+```json
+"scripts": {
+  "start:prod": "npm run build && npm run start"
+}
+```
+
+---
+
+## 🔐 Seguridad
+
+- Endpoints de `/orders` protegidos con `JwtAuthGuard`
+- Contraseñas encriptadas con `bcrypt`
+- JWT firmado con `JWT_SECRET`
+- Validaciones básicas activas
+
+---
+
+## 🧑‍🍳 Autor
+
+Creado con por
+
+**Juan Prieto Rodríguez**Frontend & Fullstack Developer📧 [jp1739@gmail.com](mailto:jp1739@gmail.com)
+
+---
