@@ -5,9 +5,10 @@ import { OrdersController } from './orders.controller';
 import { Order } from './order.entity';
 import { User } from '../users/user.entity';
 import { Burger } from '../burgers/burger.entity';
+import { EmailModule } from 'src/email/email.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Order, User, Burger])],
+  imports: [TypeOrmModule.forFeature([Order, User, Burger]), EmailModule],
   controllers: [OrdersController],
   providers: [OrdersService],
 })

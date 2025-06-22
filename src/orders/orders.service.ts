@@ -4,6 +4,7 @@ import { Order } from './order.entity';
 import { Repository } from 'typeorm';
 import { User } from '../users/user.entity';
 import { Burger } from '../burgers/burger.entity';
+import { EmailService } from 'src/email/email.service';
 
 @Injectable()
 export class OrdersService {
@@ -14,17 +15,16 @@ export class OrdersService {
     private usersRepo: Repository<User>,
     @InjectRepository(Burger)
     private burgersRepo: Repository<Burger>,
+    private readonly emailService: EmailService,
   ) {}
 
   async create(orderData: any, userId: number) {
     const user = await this.usersRepo.findOne({ where: { id: userId } });
-    if (!user) throw new Error(`User with id ${userId} not found`);
-
     const burger = await this.burgersRepo.findOne({
       where: { id: orderData.burgerId },
     });
-    if (!burger)
-      throw new Error(`Burger with id ${orderData.burgerId} not found`);
+
+    if (!user || !burger) throw new Error('User or burger not found');
 
     const order = new Order();
     order.user = user;
@@ -35,7 +35,18 @@ export class OrdersService {
     order.drink = orderData.drink;
     order.totalPrice = orderData.totalPrice;
 
-    return this.ordersRepo.save(order);
+    const savedOrder = await this.ordersRepo.save(order);
+
+    await this.emailService.sendOrderConfirmation(user.email, {
+      burger,
+      extras: order.extras,
+      sauces: order.sauces,
+      drink: order.drink,
+      side: order.side,
+      totalPrice: order.totalPrice,
+    });
+
+    return savedOrder;
   }
 
   async findByUser(userId: number) {

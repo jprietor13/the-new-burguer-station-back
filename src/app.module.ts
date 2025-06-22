@@ -11,6 +11,8 @@ import { ExtrasModule } from './extras/extras.module';
 import { SaucesModule } from './sauces/sauces.module';
 import { SidesModule } from './sides/sides.module';
 import { DrinksModule } from './drinks/drinks.module';
+import { EmailModule } from './email/email.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -32,6 +34,10 @@ import { DrinksModule } from './drinks/drinks.module';
     SaucesModule,
     SidesModule,
     DrinksModule,
+    EmailModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
