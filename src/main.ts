@@ -2,8 +2,10 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
-if (!globalThis.crypto) {
-  (globalThis as any).crypto = require('crypto');
+if (typeof globalThis.crypto === 'undefined') {
+  Object.defineProperty(globalThis, 'crypto', {
+    value: require('crypto'),
+  });
 }
 
 async function bootstrap() {
