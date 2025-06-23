@@ -16,6 +16,8 @@ export class EmailService {
 
   async sendOrderConfirmation(to: string, orderData: any) {
     const { burger, extras, sauces, drink, side, totalPrice } = orderData;
+    const safeTotal =
+      typeof totalPrice === 'number' ? totalPrice : parseFloat(totalPrice);
 
     const html = `
       <h2>Gracias por tu pedido 🍔</h2>
@@ -24,7 +26,7 @@ export class EmailService {
       <p><strong>Salsas:</strong> ${sauces.join(', ')}</p>
       <p><strong>Bebida:</strong> ${drink}</p>
       <p><strong>Acompañamiento:</strong> ${side}</p>
-      <p><strong>Total:</strong> $${totalPrice.toFixed(2)}</p>
+      <p><strong>Total:</strong> $${safeTotal.toFixed(2)}</p>
     `;
 
     const fromEmail = this.configService.get<string>('SENDGRID_FROM_EMAIL');
