@@ -17,4 +17,8 @@ export class BurgersService {
   create(burger: Burger): Promise<Burger> {
     return this.burgerRepo.save(burger);
   }
+
+  async findOne(id: number): Promise<Burger | null> {
+    return this.burgerRepo.findOne({ where: { id } });
+  }
 }
