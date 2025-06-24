@@ -11,9 +11,11 @@ if (typeof globalThis.crypto === 'undefined') {
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  //TODO
   app.enableCors({
-    origin: ['http://localhost:5173'],
+    origin: [
+      'http://localhost:5173',
+      'https://the-new-burguer-station-front.vercel.app/',
+    ],
     credentials: true,
   });
 
