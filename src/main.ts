@@ -14,7 +14,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:5173',
-      'https://the-new-burguer-station-front.vercel.app/',
+      'https://the-new-burguer-station-front.vercel.app',
     ],
     credentials: true,
   });
